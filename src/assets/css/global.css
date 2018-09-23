@@ -1,0 +1,54 @@
+/*  NORMALIZE AND SKELETON CSS FOR BASIC STYLES */
+@import './normalize.css';
+
+body{
+  background-color: #546270;
+  color: white
+}
+
+.container{
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*  BASIC CUSTOM STYLINGS */
+a, .is-cursor{
+  cursor: pointer
+}
+
+.center-text{
+  text-align: center
+}
+
+.is-bold{
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
+.outline{
+  border: 1px solid red ;
+}
+
+
+/*  GRID ADDENDUMS */
+.col-no-gutter{
+  padding: 0px!important;
+  margin: 0px!important
+}
+
+.input, select, button{
+  color: black;
+  padding: 2px
+}
+
+canvas{
+  padding: 0;
+  margin: 0
+}
