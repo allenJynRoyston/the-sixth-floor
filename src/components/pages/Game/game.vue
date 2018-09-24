@@ -7,23 +7,35 @@
       // inventory
       .game-inventory-btn(v-on:click='UIManager.toggleInventory()')
       .game-inventory
-        .game-inventory-next-btn(v-on:click='inventoryManager.next()')
-        .game-inventory-prev-btn(v-on:click='inventoryManager.prev()')
+        .game-inventory-next-btn(v-on:click='InventoryManager.next()')
+        .game-inventory-prev-btn(v-on:click='InventoryManager.prev()')
         .game-item-container
-          .game-item.center(v-for='(item, index) in inventory' v-on:click='inventoryManager.selectItem(item, index)')
+          .game-item.center(v-for='(item, index) in inventory' v-on:click='InventoryManager.selectItem(item, index)')
             h1 {{item.name}}
       // menus
       .game-menu-btn(v-on:click='UIManager.toggleMenu()')
       .game-menu
+      // dialog modal
+      .game-dialog-modal
+        .speaker
+          p 
+        .content
+          p 
       // underscreen
       .game-closeall(v-on:click='UIManager.closeUI()')
       // game canvas
       .canvas-container
         pixi-component(v-bind:ele='component')
-    .col-xs-12.center
-      button.btn-space(v-on:click='loadfile()') Force Close Menus
+    .col-xs-12.center    
+      button.btn-space(v-on:click='UIManager.hideUI(false)') Hide Buttons
+      button.btn-space(v-on:click='UIManager.hideUI(true)') Show Buttons
       button.btn-space(v-on:click='UIManager.closeUI()') Close UI
       button.btn-space(v-on:click='loadfile()') Reload
+    .col-xs-12.center
+      button.btn-space(v-on:click='testDialog()') Setup Dialog
+      button.btn-space(v-on:click='nextDialog()') Next
+      button.btn-space(v-on:click='autoplayDialog()') Autoplay
+      button.btn-space(v-on:click='skipDialog()') Skip Dialog
 </template>
 
 <script src='./game.js'></script>
@@ -48,6 +60,37 @@
         top: 0
         z-index: 1
 
+      .game-dialog-modal
+        position: absolute
+        bottom: 0
+        left: 0
+        width: 100%
+        height: 200px
+        background-color: rgba(0, 0, 0, .5) 
+        z-index: 10
+
+        .speaker  
+          position: absolute
+          top: 0
+          left: 0
+          height: 69%
+          width: 190px
+          padding: 30px 30px
+          text-align: center
+          p 
+            font-size: 25px
+        
+        .content
+          position: absolute
+          top: 0
+          left: 250px
+          height: 69%
+          width: calc(95% - 250px)
+          padding: 30px 30px
+          p 
+            font-size: 18px          
+          
+
       .game-inventory
         position: absolute
         z-index: 9
@@ -61,7 +104,6 @@
           padding: 10px 100px
           z-index: 10
           
-
         .game-item
           width: 80px
           height: 85%
@@ -79,7 +121,6 @@
         .game-item:nth-child(11n)
           margin-left: 175px
         
-
         .game-inventory-prev-btn
           position: absolute
           top: 0
@@ -99,9 +140,7 @@
           height: 100%
           cursor: pointer    
           z-index: 100      
-        
-        
-
+              
       .game-menu
         position: absolute
         right: 0
@@ -110,7 +149,6 @@
         width: 200px
         height: 100%
         background-color: rgba(0, 0, 0, .75)
-
 
       .game-inventory-btn
         position: absolute
@@ -138,6 +176,8 @@
         width: 100%
         height: 100%
         cursor: pointer
+        background-color: rgba(0, 0, 0, .2)
+
 
 
 </style>

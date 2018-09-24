@@ -44,6 +44,32 @@ export class UIManager {
         this.openInventory(inventory.state, true)
     }
 
+    hideUI(state = false, instant = false){
+        let types = ['inventory', 'menu']
+        let {animation} = this
+
+        if(!animation.isAnimating || instant){
+            animation.isAnimating = true
+            types.forEach(type => {            
+                let {ele, btn} = this[type]
+                this[type].state = !state;        
+                anime({
+                    targets: btn,
+                    translateX: !state ? btn.placement.hide : btn.placement.show,
+                    duration: instant ? 0 : 500,
+                    easing: !state ? 'easeOutQuad' : 'easeOutQuad',
+                    complete: () => {
+                        animation.isAnimating = false
+                    }
+                })  
+            })
+            if(state){
+                this.closeUI(true, true)
+            }
+        }
+        
+    }
+
     closeUI(state = true, instant = false){ 
         let types = ['inventory', 'menu']
         let {animation} = this
@@ -58,7 +84,7 @@ export class UIManager {
                     targets: btn,
                     translateX: !state ? btn.placement.hide : btn.placement.show,
                     duration: instant ? 0 : 500,
-                    easing: !state ? 'easeOutQuad' : 'easeInQuad'
+                    easing: !state ? 'easeOutQuad' : 'easeOutQuad'
                 })                
                 anime({
                     targets: ele,
@@ -66,7 +92,7 @@ export class UIManager {
                     translateX: type === 'menu' ? (!state ?  ele.placement.hide : ele.placement.show) : 0,
                     opacity: !state ? 1 : 0,
                     duration: instant ? 0 : 500,
-                    easing: !state ? 'easeOutQuad' : 'easeInQuad',
+                    easing: !state ? 'easeOutQuad' : 'easeOutQuad',
                     delay: 250,
                     complete: () => {
                         animation.isAnimating = false
@@ -98,20 +124,20 @@ export class UIManager {
                 targets: this.menu.btn,
                 translateX: state ? this.menu.btn.placement.hide : this.menu.btn.placement.show,
                 duration: instant ? 0 : 500,
-                easing: state ? 'easeOutQuad' : 'easeInQuad'
+                easing: state ? 'easeOutQuad' : 'easeOutQuad'
             })        
             anime({
                 targets: btn,
                 translateX: state ? btn.placement.hide : btn.placement.show,
                 duration: instant ? 0 : 500,
-                easing: state ? 'easeOutQuad' : 'easeInQuad'
+                easing: state ? 'easeOutQuad' : 'easeOutQuad'
             })
             anime({
                 targets: ele,
                 translateY: state ?  ele.placement.hide : ele.placement.show,
                 opacity: state ? 1 : 0,
                 duration: instant ? 0 : 500,
-                easing: state ? 'easeOutQuad' : 'easeInQuad',
+                easing: state ? 'easeOutQuad' : 'easeOutQuad',
                 delay: 250,
                 complete: () => {
                     animation.isAnimating = false      
@@ -141,20 +167,20 @@ export class UIManager {
                 targets: this.inventory.btn,
                 translateX: state ? this.inventory.btn.placement.hide : this.inventory.btn.placement.show,
                 duration: instant ? 0 : 500,
-                easing: state ? 'easeOutQuad' : 'easeInQuad'
+                easing: state ? 'easeOutQuad' : 'easeOutQuad'
             })          
             anime({
                 targets: btn,
                 translateX: state ? btn.placement.hide : btn.placement.show,
                 duration: instant ? 0 : 500,
-                easing: state ? 'easeOutQuad' : 'easeInQuad'
+                easing: state ? 'easeOutQuad' : 'easeOutQuad'
             })        
             anime({
                 targets: ele,
                 translateX: state ? ele.placement.hide : ele.placement.show,
                 opacity: state ? 1 : 0,
                 duration: instant ? 0 : 500,
-                easing: state ? 'easeOutQuad' : 'easeInQuad',
+                easing: state ? 'easeOutQuad' : 'easeOutQuad',
                 delay: 250, 
                 complete: () => {
                     animation.isAnimating = false
