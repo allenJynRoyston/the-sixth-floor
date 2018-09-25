@@ -2,17 +2,14 @@ export class InventoryManager{
     constructor(props){
         this.props = props        
         this.items = []
+        this.currentInventory = []
         this.onpage = 0
         this.fillContainer()        
     }   
     
-    getItems(){
-        return this.items
-    }
-
     addItem(item){
         this.items.push(item)
-        this.fillContainer()
+        this.fillContainer()        
     }    
 
     removeItem(index){
@@ -39,7 +36,7 @@ export class InventoryManager{
         }
     }
 
-    fillContainer(){
+    fillContainer(){        
         let {container} = this.props   
         let {onpage} = this;
         let index = 0
@@ -50,7 +47,7 @@ export class InventoryManager{
                 _data.push(this.items[sp + index])
             }
             index++            
-        }
-        this.props.update(_data)
+        }        
+        this.currentInventory = _data
     }
 }

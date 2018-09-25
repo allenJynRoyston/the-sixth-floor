@@ -5,15 +5,15 @@
         option(v-for='file in files') {{file.filename}}      
     .game-container
       // inventory
-      .game-inventory-btn(v-on:click='UIManager.toggleInventory()')
+      .game-inventory-btn(v-on:click='GameManager.UIManager.toggleInventory()')
       .game-inventory
-        .game-inventory-next-btn(v-on:click='InventoryManager.next()')
-        .game-inventory-prev-btn(v-on:click='InventoryManager.prev()')
-        .game-item-container
-          .game-item.center(v-for='(item, index) in inventory' v-on:click='InventoryManager.selectItem(item, index)')
-            h1 {{item.name}}
+        .game-inventory-next-btn(v-on:click='GameManager.InventoryManager.next()')
+        .game-inventory-prev-btn(v-on:click='GameManager.InventoryManager.prev()')
+        .game-item-container(v-if='!!GameManager.InventoryManager')
+          .game-item.center(v-for='(item, index) in GameManager.InventoryManager.currentInventory' v-on:click='GameManager.InventoryManager.selectItem(item, index)')
+            h1 {{item.name}}          
       // menus
-      .game-menu-btn(v-on:click='UIManager.toggleMenu()')
+      .game-menu-btn(v-on:click='GameManager.UIManager.toggleMenu()')
       .game-menu
       // dialog modal
       .game-dialog-modal
@@ -22,20 +22,23 @@
         .content
           p 
       // underscreen
-      .game-closeall(v-on:click='UIManager.closeUI()')
+      .game-closeall(v-on:click='GameManager.UIManager.closeUI()')
       // game canvas
       .canvas-container
         pixi-component(v-bind:ele='component')
     .col-xs-12.center    
-      button.btn-space(v-on:click='UIManager.hideUI(false)') Hide Buttons
-      button.btn-space(v-on:click='UIManager.hideUI(true)') Show Buttons
-      button.btn-space(v-on:click='UIManager.closeUI()') Close UI
+      button.btn-space(v-on:click='GameManager.UIManager.hideUI(false)') Hide Buttons
+      button.btn-space(v-on:click='GameManager.UIManager.hideUI(true)') Show Buttons
+      button.btn-space(v-on:click='GameManager.UIManager.closeUI()') Close UI
       button.btn-space(v-on:click='loadfile()') Reload
     .col-xs-12.center
-      button.btn-space(v-on:click='testDialog()') Setup Dialog
-      button.btn-space(v-on:click='nextDialog()') Next
-      button.btn-space(v-on:click='autoplayDialog()') Autoplay
-      button.btn-space(v-on:click='skipDialog()') Skip Dialog
+      button.btn-space(v-on:click='TestUtility.addMockItems()') Add Items
+      button.btn-space(v-on:click='TestUtility.removeMockItem()') Remove Item      
+    .col-xs-12.center
+      button.btn-space(v-on:click='TestUtility.testDialog()') Setup Dialog
+      button.btn-space(v-on:click='TestUtility.nextDialog()') Next
+      button.btn-space(v-on:click='TestUtility.autoplayDialog()') Autoplay
+      button.btn-space(v-on:click='TestUtility.skipDialog()') Skip Dialog
 </template>
 
 <script src='./game.js'></script>
@@ -49,6 +52,7 @@
     .game-container
       position: relative
       width: 1280px
+      min-width: 1280px
       height: 720px   
       overflow: hidden
       background-color: black      
