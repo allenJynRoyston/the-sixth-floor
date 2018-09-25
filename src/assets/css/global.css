@@ -1,5 +1,6 @@
 /*  NORMALIZE AND SKELETON CSS FOR BASIC STYLES */
 @import './normalize.css';
+@import './dialogtext.css';
 
 body{
   background-color: #546270;

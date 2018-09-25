@@ -12,6 +12,13 @@ export class DialogManager {
         this.dialogIsOpen = false
         this.autoplayInterval = null
         this.isAutoplaying = false
+        this.specialWords = {
+          bold: [], 
+          em: [], 
+          large: [], 
+          small: [],
+          red: []
+        }
 
         // placement
         this.props.container.placement = {
@@ -83,8 +90,15 @@ export class DialogManager {
             if(this.sequencer !== null){
                 let line = this.sequencer.next()
                 if(line.value !== null){
-                    let {speakerText, contentText} = line.value
-                    this.setText({ speakerText, contentText })
+                    let {speakerText, contentText, style, bold, em, large, small, red, shake} = line.value
+                    this.specialWords.bold = !!bold ? bold : []
+                    this.specialWords.em = !!em ? em : []
+                    this.specialWords.large = !!large ? large : []
+                    this.specialWords.small = !!small ? small : []                    
+                    this.specialWords.red = !!red ? red : []
+                    this.specialWords.shake = !!shake ? shake : []
+                    
+                    this.setText({ speakerText, contentText, style: style = !!style ? style : 'normal' })
                     this.playText()
                         .then(() => {
                             resolve({completed: false, error: false})
@@ -101,9 +115,9 @@ export class DialogManager {
 
 
     setText(data){
-        let {speakerText, contentText} = data;
+        let {speakerText, contentText, style} = data;        
         this.props.speaker.updateText(speakerText)
-        this.dialog = {speakerText, contentText}        
+        this.dialog = {speakerText, contentText, style}        
     }
 
     playText(){
@@ -121,18 +135,35 @@ export class DialogManager {
 
     nextDialog(){
         return new Promise((resolve, reject) => {
-            let {contentText} = this.dialog;
+            let {contentText, style} = this.dialog;
             let {content} = this.props
+            let {bold, em, large, small, red, shake} = this.specialWords
             let _textstring = contentText.split(" ")
+
+
             this.showContent()
             this.showSpeaker()
 
-            let bold = ['lorem']
-            let em = ['ipsum']
-            let large = ['dolor']
-            let small = ['sit']
-            let red = ['amet,']
-            
+            // process special characters
+            bold = bold.map(phrase => {
+              return phrase.split(" ")
+            })
+            em = em.map(phrase => {
+              return phrase.split(" ")
+            })
+            large = large.map(phrase => {
+              return phrase.split(" ")
+            })     
+            small = small.map(phrase => {
+              return phrase.split(" ")
+            })     
+            red = red.map(phrase => {
+              return phrase.split(" ")
+            })    
+            shake = shake.map(phrase => {
+              return phrase.split(" ")
+            })                                                
+
 
             const wordSequencer = function*(data){
                 for(let i = 0; i < data.length; i++){
@@ -163,41 +194,73 @@ export class DialogManager {
                 }
 
                 // check for keywords
-                bold.forEach((word) => {
-                    if(word.toLowerCase() === _textstring[index].toLowerCase()){
-                        span.style.fontWeight = 700
-                    }
-                })     
+                bold.forEach(_bold => {
+                  _bold.forEach((word) => {
+                      if(word.toLowerCase() === _textstring[index].toLowerCase()){
+                          span.classList.add('__dialog--bold');                          
+                      }
+                  })    
+                }) 
                 
                 // check for keywords
-                em.forEach((word) => {
-                    if(word.toLowerCase() === _textstring[index].toLowerCase()){
-                        span.style.fontStyle = 'italic'                    
-                    }
-                })   
+                em.forEach((_em) => {
+                  _em.forEach((word) => {
+                      if(word.toLowerCase() === _textstring[index].toLowerCase()){
+                          span.classList.add('__dialog--em');        
+                      }
+                  })   
+                })
 
                 // check for keywords
-                large.forEach((word) => {
-                    if(word.toLowerCase() === _textstring[index].toLowerCase()){
-                        span.style.fontSize = '1.5em'                    
-                    }
-                })  
-                
-                // check for keywords
-                small.forEach((word) => {
-                    if(word.toLowerCase() === _textstring[index].toLowerCase()){
-                        span.style.fontSize = '.8em'                    
-                    }
+                large.forEach((_large) => {
+                  _large.forEach((word) => {
+                      if(word.toLowerCase() === _textstring[index].toLowerCase()){
+                          span.classList.add('__dialog--large');           
+                      }
+                  })  
                 })
                 
                 // check for keywords
-                red.forEach((word) => {
+                small.forEach((_small) => {
+                  _small.forEach((word) => {
+                      if(word.toLowerCase() === _textstring[index].toLowerCase()){
+                          span.classList.add('__dialog--small');          
+                      }
+                  })
+                })
+                
+                // check for keywords
+                red.forEach((_red) => {
+                  _red.forEach((word) => {
+                      if(word.toLowerCase() === _textstring[index].toLowerCase()){
+                          span.classList.add('__dialog--red');
+                      }
+                  }) 
+                })      
+                
+                // check for keywords
+                shake.forEach((_shake) => {
+                  _shake.forEach((word) => {
                     if(word.toLowerCase() === _textstring[index].toLowerCase()){
-                        span.style.color = 'red'
-                        span.style.fontWeight = 700
+                        span.classList.add('__dialog--shake');
                     }
-                })            
+                  })                     
+                })
             })
+
+            // STYLES
+            let transformStart, transformEasing;
+            switch(style){
+              case 'fast': 
+                transformEasing = 'linear'
+                transformStart = `opacity: 0; transform: translateY(2px) scale(2)`
+              break
+              default:  // 'normal'
+                transformEasing = 'easeInExpo'
+                transformStart = `opacity: 0; transform: translateX(50px) scale(5)`
+              break
+            }
+
 
             // begin word sequencing
             let words = wordSequencer(_textstring)        
@@ -211,7 +274,7 @@ export class DialogManager {
                         let s = _spans[wordIndex]
                         if(letter.value !== null){                        
                             // change transform properties for effect
-                            s.updateText(`${s.getText()}<span class='__letter' style='display: inline-block; opacity: 0; transform: translateX(10px) scale(5)'>${letter.value}</span>${letter.value === '.' || letter.value === ',' ? ' ' : ''}`)
+                            s.updateText(`${s.getText()}<span class='__letter' style='display: inline-block; ${transformStart}'>${letter.value}</span>${letter.value === '.' || letter.value === ',' ? ' ' : ''}`)
                             build()
                         }
                         else{
@@ -223,7 +286,7 @@ export class DialogManager {
                     build()
                 }
                 else{
-                    this.animateTextIn()
+                    this.animateTextIn(transformEasing)
                         .then(() => {
                             resolve()
                         })
@@ -250,7 +313,7 @@ export class DialogManager {
         })        
     }    
 
-    animateTextIn(callback = () => {}){
+    animateTextIn(easing){
         return new Promise((resolve, reject) => {  
             let {content} = this.props
             let letters = content.querySelectorAll('.__letter')
@@ -260,7 +323,7 @@ export class DialogManager {
                     opacity: 1, 
                     scale: 1,
                     duration: 500,
-                    easing: 'easeInExpo', // change for effect
+                    easing,
                     translateX: 0,
                     translateY: 0,
                     delay: index*5,     // change for speed

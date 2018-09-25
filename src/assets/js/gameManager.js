@@ -23,13 +23,9 @@ export class GameManager {
       //------------------------------------------------------------------- SETUP INVENTORY MANAGER
       // setup inventory
       this.InventoryManager = new InventoryManager({
-        container: document.querySelector(".game-item-container"),    
-        update: (data) => {
-          this.inventory = data
-        }
+        container: document.querySelector(".game-item-container")
       })
       //-------------------------------------------------------------------
-
 
       //-------------------------------------------------------------------  ADD DIALOG MANAGER
       this.DialogManager = new DialogManager({
@@ -38,7 +34,6 @@ export class GameManager {
         content: document.querySelector(".game-dialog-modal .content p"),  
       })      
       //-------------------------------------------------------------------
-
 
       
       return {

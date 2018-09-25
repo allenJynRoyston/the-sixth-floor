@@ -22,7 +22,6 @@ export class InventoryManager{
     }
 
     next(instant = false){
-        let {container} = this.props        
         if(this.onpage + 1 < (Math.ceil(this.items.length/10)) ){
             this.onpage++       
             this.fillContainer()            
