@@ -35,7 +35,8 @@
       button.btn-space(v-on:click='TestUtility.addMockItems()') Add Items
       button.btn-space(v-on:click='TestUtility.removeMockItem()') Remove Item      
     .col-xs-12.center
-      button.btn-space(v-on:click='TestUtility.testDialog()') Setup Dialog
+      button.btn-space(v-on:click='TestUtility.testDialogClasses()') Test Dialog Classes
+      button.btn-space(v-on:click='TestUtility.testDialogStyles()') Test Dialog Styles
       button.btn-space(v-on:click='TestUtility.nextDialog()') Next
       button.btn-space(v-on:click='TestUtility.autoplayDialog()') Autoplay
       button.btn-space(v-on:click='TestUtility.skipDialog()') Skip Dialog

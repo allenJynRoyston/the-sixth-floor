@@ -20,7 +20,7 @@ export default {
         this.GameManager = new GameManager();
         this.TestUtility = new TestUtility(this.GameManager);
         // load file
-        // this.load(1)
+        this.load(1);
     },
     methods: {
         load(index) {

@@ -5,11 +5,10 @@ export class TestUtility {
   }
 
   //-------------------------------------- DIALOG MANAGER TESTS
-  testDialog(){
+  testDialogClasses(){
     let {DialogManager} = this.GameManager
     let dialog = [
       {
-        style: 'fast',
         speakerText: 'Name 1',
         contentText: 'This text will contain bold words.',
         bold: ['This text', 'bold words.']
@@ -50,6 +49,46 @@ export class TestUtility {
     DialogManager.loadDialog(dialog) 
     this.nextDialog()
   }
+
+  //-------------------------------------- DIALOG MANAGER TESTS
+  testDialogStyles(){
+    let {DialogManager} = this.GameManager
+    let dialog = [
+      {
+        style: 'blurin',
+        speakerText: 'Name 2',
+        contentText: 'This is interferance text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.',
+      },       
+      {
+        style: 'ghostly',
+        speakerText: 'Name 2',
+        contentText: 'This is ghostly text.',
+        shake: ['This is ghostly text.'],
+      }, 
+      {
+        style: 'interferance',
+        speakerText: 'Name 2',
+        contentText: 'This is interferance text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.'
+      },             
+      {
+        style: 'radio',
+        speakerText: 'Name 2',
+        contentText: 'This is radio text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.'
+      },      
+      {
+        style: 'normal',
+        speakerText: 'Name 1',
+        contentText: 'This is normal style text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.'
+      },
+      {
+        style: 'fast',
+        speakerText: 'Name 2',
+        contentText: 'This is fast style text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.'
+      }                                                
+    ]
+    DialogManager.loadDialog(dialog) 
+    this.nextDialog()
+  }  
 
   nextDialog(){
     let {DialogManager} = this.GameManager

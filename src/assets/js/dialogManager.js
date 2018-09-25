@@ -11,7 +11,7 @@ export class DialogManager {
         this.sequencer = null
         this.dialogIsOpen = false
         this.autoplayInterval = null
-        this.isAutoplaying = false
+        this.isAutoplaying = false        
         this.specialWords = {
           bold: [], 
           em: [], 
@@ -249,16 +249,44 @@ export class DialogManager {
             })
 
             // STYLES
-            let transformStart, transformEasing;
+            let transformStart, transformEasing, duration, speed;
             switch(style){
-              case 'fast': 
+              case 'normal': 
+                duration = 50
+                speed = 3
                 transformEasing = 'linear'
-                transformStart = `opacity: 0; transform: translateY(2px) scale(2)`
+                transformStart = `opacity: 0; transform: translateY(-10px) scale(1)`
               break
-              default:  // 'normal'
-                transformEasing = 'easeInExpo'
-                transformStart = `opacity: 0; transform: translateX(50px) scale(5)`
+              case 'fast': 
+                duration = 50
+                speed = 1
+                transformEasing = 'linear'
+                transformStart = `opacity: 0; transform: translateY(-10px) scale(1)`
               break
+              case 'radio': 
+                duration = 500
+                speed = 5
+                transformEasing = 'easeOutElastic'
+                transformStart = `opacity: 0; transform: translateX(20px) scale(5)`              
+              break    
+              case 'interferance': 
+                duration = 500
+                speed = 10
+                transformEasing = 'easeInElastic'
+                transformStart = `opacity: 0; transform: translateX(-10px) scale(5)`
+              break   
+              case 'ghostly': 
+                duration = 500
+                speed = 50
+                transformEasing = 'linear'
+                transformStart = `opacity: 0; transform: translateY(-10px) scale(0)`
+              break  
+              case 'blurin': 
+                duration = 500
+                speed = 1
+                transformEasing = 'linear'
+                transformStart = `opacity: 0; transform: translateX(-10px) scale(5); filter: blur(10px);`
+              break                                                        
             }
 
 
@@ -286,7 +314,7 @@ export class DialogManager {
                     build()
                 }
                 else{
-                    this.animateTextIn(transformEasing)
+                    this.animateTextIn(transformEasing, duration, speed)
                         .then(() => {
                             resolve()
                         })
@@ -313,20 +341,21 @@ export class DialogManager {
         })        
     }    
 
-    animateTextIn(easing){
+    animateTextIn(easing, duration, speed){
         return new Promise((resolve, reject) => {  
-            let {content} = this.props
+            let {content} = this.props            
             let letters = content.querySelectorAll('.__letter')
             letters.forEach((letter, index) => {  
                 anime({
                     targets: letter,
                     opacity: 1, 
                     scale: 1,
-                    duration: 500,
+                    duration,
                     easing,
                     translateX: 0,
                     translateY: 0,
-                    delay: index*5,     // change for speed
+                    filter: 'blur(0px)',
+                    delay: index*speed,     // change for speed
                     complete: () => {
                         if(index === letters.length-1){
                             resolve()
