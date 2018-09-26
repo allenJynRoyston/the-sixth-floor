@@ -5,7 +5,7 @@ export default {
   data():any {
     return {
       store: this.$store,
-      component: [],
+      PixiComponents: [],
       files: [
         {filename: "Demo", file: "src/_pixi/pixi.test.js"}, 
         {filename: "Water", file: "src/_pixi/pixi.water.js"}
@@ -14,14 +14,14 @@ export default {
       currentfile: null,
       isReady: false,
       GameManager,
-      TestUtility
+      TestUtility,
     };
   },
   mounted():void {
-    this.GameManager = new GameManager()
+    this.GameManager = new GameManager(this.PixiComponents)  
     this.TestUtility = new TestUtility(this.GameManager)
     // load file
-     this.load(1)
+    // this.load(1)  
   },  
   methods: {
     load(index:number){
@@ -40,7 +40,7 @@ export default {
     },
 
     loadfile(){
-      this.component[0].loadFile(this.currentfile.file)
+      this.TestUtility.testLoadPixiFile(this.currentfile.file)      
     }
   }
 };

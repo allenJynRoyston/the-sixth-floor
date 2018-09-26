@@ -10,7 +10,7 @@ export default {
     };
   },
   mounted():void {
-    this.$parent.component.push(this)
+    this.$parent.PixiComponents.push(this)
   },
   methods: {
     async loadFile(file:string):Promise<any> {

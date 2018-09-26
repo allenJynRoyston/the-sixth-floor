@@ -1,10 +1,11 @@
 import {UIManager} from "./uiManager";
 import {InventoryManager} from "./inventoryManager";
 import {DialogManager} from "./dialogManager";
+import {MasterSequencer} from "./masterSequencer";
 
 //--------------------------
 export class GameManager {
-  constructor(){      
+  constructor(PIxiComponents){      
       //-------------------------------------------------------------------  SETUP UI MANAGER
       this.UIManager = new UIManager({
         inventoryele: document.querySelector(".game-inventory"),
@@ -35,8 +36,18 @@ export class GameManager {
       })      
       //-------------------------------------------------------------------
 
+      //-------------------------------------------------------------------
+      this.MasterSequencer = new MasterSequencer()
+      //-------------------------------------------------------------------
+
+
+      //-------------------------------------------------------------------
+      this.PixiContainers = PIxiComponents
+      //-------------------------------------------------------------------
       
       return {
+        PixiContainers: this.PixiContainers,
+        MasterSequencer: this.MasterSequencer,
         UIManager: this.UIManager,
         InventoryManager: this.InventoryManager,
         DialogManager: this.DialogManager

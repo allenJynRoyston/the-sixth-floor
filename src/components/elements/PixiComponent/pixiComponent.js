@@ -17,7 +17,7 @@ export default {
         };
     },
     mounted() {
-        this.$parent.component.push(this);
+        this.$parent.PixiComponents.push(this);
     },
     methods: {
         loadFile(file) {

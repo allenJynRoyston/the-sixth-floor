@@ -25,7 +25,14 @@
       .game-closeall(v-on:click='GameManager.UIManager.closeUI()')
       // game canvas
       .canvas-container
-        pixi-component(v-bind:ele='component')
+        pixi-component(v-bind:ele='PixiComponents')
+
+    // TEST BUTTONS
+    .col-xs-12.center    
+      button.btn-space(v-on:click='TestUtility.testLoadMasterSequencer()') Load Sequence
+      button.btn-space(v-on:click='TestUtility.testNextMasterSequence()') Next Sequence
+    .col-xs-12.center    
+      button.btn-space(v-on:click='TestUtility.testLoadPixiFile()') Load Pixi File  
     .col-xs-12.center    
       button.btn-space(v-on:click='GameManager.UIManager.hideUI(false)') Hide Buttons
       button.btn-space(v-on:click='GameManager.UIManager.hideUI(true)') Show Buttons

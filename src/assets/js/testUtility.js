@@ -4,6 +4,32 @@ export class TestUtility {
     this.GameManager = managers
   }
 
+
+  testLoadPixiFile(file = 'src/_pixi/pixi.water.js'){
+    let {PixiContainers} = this.GameManager    
+    PixiContainers[0].loadFile(file)    
+  }
+
+  testLoadMasterSequencer(){
+    let {MasterSequencer} = this.GameManager
+    // load a sequence script
+    let sequence = [
+      {action: 'load game'},
+      {action: 'start game'},
+      {action: 'start intro sequence'},
+      {action: 'start main menu'},
+      {action: 'start game'},
+      {action: 'load first sequence'}
+    ]
+    MasterSequencer.set(sequence)
+    
+  }
+
+  testNextMasterSequence(){
+    let {MasterSequencer} = this.GameManager
+    MasterSequencer.next()
+  }
+
   //-------------------------------------- DIALOG MANAGER TESTS
   testDialogClasses(){
     let {DialogManager} = this.GameManager
