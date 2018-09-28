@@ -2,10 +2,16 @@ import {UIManager} from "./uiManager";
 import {InventoryManager} from "./inventoryManager";
 import {DialogManager} from "./dialogManager";
 import {MasterSequencer} from "./masterSequencer";
+import {KeyboardManager} from "./keyboardManager";
 
 //--------------------------
 export class GameManager {
   constructor(PIxiComponents){      
+
+      //-------------------------------------------------------------------  PULLS IN PIXI COMPONENTS
+      this.PixiContainers = PIxiComponents  
+      //-------------------------------------------------------------------
+
       //-------------------------------------------------------------------  SETUP UI MANAGER
       this.UIManager = new UIManager({
         inventoryele: document.querySelector(".game-inventory"),
@@ -36,23 +42,35 @@ export class GameManager {
       })      
       //-------------------------------------------------------------------
 
+      //-------------------------------------------------------------------  ADDS KEYBOARD MANAGER
+      this.KeyboardManager = new KeyboardManager();
+      this.KeyboardManager.reassignThresholds({long: 1000})
+      clearInterval(window.keyboardManagerInterval)
+
+      // HOW TO LISTEN TO KEYBOARD
+      // window.keyboardManagerInterval = setInterval(() => {
+      //    console.log( this.KeyboardManager.read().inputs.L )
+      //  }, 1)
       //-------------------------------------------------------------------
+
+      //-------------------------------------------------------------------  ADD MASTER SEQUENCER
       this.MasterSequencer = new MasterSequencer()
       //-------------------------------------------------------------------
 
-
-      //-------------------------------------------------------------------
-      this.PixiContainers = PIxiComponents
-      //-------------------------------------------------------------------
       
       return {
         PixiContainers: this.PixiContainers,
         MasterSequencer: this.MasterSequencer,
         UIManager: this.UIManager,
         InventoryManager: this.InventoryManager,
-        DialogManager: this.DialogManager
+        DialogManager: this.DialogManager,
+        KeyboardManager: this.KeyboardManager
       }
   }
+
+  
+
+
 
 }
 //--------------------------
