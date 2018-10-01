@@ -3,6 +3,7 @@ import {InventoryManager} from "./inventoryManager";
 import {DialogManager} from "./dialogManager";
 import {MasterSequencer} from "./masterSequencer";
 import {KeyboardManager} from "./keyboardManager";
+import {ControllerManager} from "./controllerManager"
 
 //--------------------------
 export class GameManager {
@@ -44,13 +45,20 @@ export class GameManager {
 
       //-------------------------------------------------------------------  ADDS KEYBOARD MANAGER
       this.KeyboardManager = new KeyboardManager();
-      this.KeyboardManager.reassignThresholds({long: 1000})
-      clearInterval(window.keyboardManagerInterval)
+      this.KeyboardManager.reassignThresholds({long: 300})
+      //-------------------------------------------------------------------
+
+      //-------------------------------------------------------------------
+      this.ControllerManager = new ControllerManager(this.KeyboardManager)
+      clearInterval(window.controllerManagerInterval)
 
       // HOW TO LISTEN TO KEYBOARD
-      // window.keyboardManagerInterval = setInterval(() => {
-      //    console.log( this.KeyboardManager.read().inputs.L )
-      //  }, 1)
+      window.controllerManagerInterval = setInterval(() => {
+        let _a = this.ControllerManager.next() 
+        if( _a.success ){
+          console.log(_a.res.io, _a.res.strength)
+         }
+      }, 10)      
       //-------------------------------------------------------------------
 
       //-------------------------------------------------------------------  ADD MASTER SEQUENCER

@@ -1,7 +1,7 @@
 //--------------------------
 export class KeyboardManager {
   constructor(reassignKeys){      
-    this.names = ['U', 'D', 'L', 'R', 'A', 'B', 'X', 'Y', 'L1', 'L2', 'R1', 'R2', 'START', 'SELECT']
+    this.names = ['U', 'D', 'L', 'R', 'A', 'B', 'X', 'Y', 'L1', 'L2', 'R1', 'R2', 'START', 'BACK']
     
     this.thresholds = {
       short: 50,
@@ -85,7 +85,7 @@ export class KeyboardManager {
     // event listener keydown
     document.removeEventListener('keydown', null)
     document.addEventListener('keydown', (event) => {
-      let {keys, inputs, names, thresholds, intervalTimers, intervalTimersCount} = this
+      let {keys, inputs, names, thresholds, intervalTimers, intervalTimersCount} = this      
       names.forEach(name => {
         if(keys[name] === event.keyCode && inputs[name] === 0){
           inputs[name] = 1          
@@ -152,10 +152,7 @@ export class KeyboardManager {
       return {success: false, error: 'NO ASSIGNED KEY'}
     }
   }
-
-
-
-
+  
 }
 //--------------------------
 
