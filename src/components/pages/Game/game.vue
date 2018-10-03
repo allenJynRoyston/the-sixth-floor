@@ -29,17 +29,19 @@
 
     // TEST BUTTONS
     .col-xs-12.center    
+      button.btn-space(v-on:click='GameManager.UIManager.hideUI(false)') Hide Buttons
+      button.btn-space(v-on:click='GameManager.UIManager.hideUI(true)') Show Buttons
+      button.btn-space(v-on:click='GameManager.UIManager.closeUI()') Close UI
+      button.btn-space(v-on:click='loadfile()') Reload    
+    .col-xs-12.center    
       button.btn-space(v-on:click='TestUtility.testLoadMasterSequencer()') Load Sequence
-      button.btn-space(v-on:click='TestUtility.testNextMasterSequence()') Next Sequence      
+      button.btn-space(v-on:click='TestUtility.testNextMasterSequence()') Next Sequence  
+    .col-xs-12.center      
       button.btn-space(v-on:click='TestUtility.startInputListener()') Start Input Listener
       button.btn-space(v-on:click='TestUtility.mockInputSequence()') Mock Input Sequence
     .col-xs-12.center    
       button.btn-space(v-on:click='TestUtility.testLoadPixiFile()') Load Pixi File  
-    .col-xs-12.center    
-      button.btn-space(v-on:click='GameManager.UIManager.hideUI(false)') Hide Buttons
-      button.btn-space(v-on:click='GameManager.UIManager.hideUI(true)') Show Buttons
-      button.btn-space(v-on:click='GameManager.UIManager.closeUI()') Close UI
-      button.btn-space(v-on:click='loadfile()') Reload
+
     .col-xs-12.center
       button.btn-space(v-on:click='TestUtility.addMockItems()') Add Items
       button.btn-space(v-on:click='TestUtility.removeMockItem()') Remove Item      
