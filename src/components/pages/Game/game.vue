@@ -41,7 +41,6 @@
       button.btn-space(v-on:click='TestUtility.mockInputSequence()') Mock Input Sequence
     .col-xs-12.center    
       button.btn-space(v-on:click='TestUtility.testLoadPixiFile()') Load Pixi File  
-
     .col-xs-12.center
       button.btn-space(v-on:click='TestUtility.addMockItems()') Add Items
       button.btn-space(v-on:click='TestUtility.removeMockItem()') Remove Item      
