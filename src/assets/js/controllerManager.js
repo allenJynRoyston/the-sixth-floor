@@ -26,46 +26,70 @@ export class ControllerManager {
 
       window.keyboardManagerInterval = setInterval(() => {
         if(this.isActive){
-          this.names.forEach(name => {
-            if(this.ioType.read().inputs[name] > 0  && !this.active[name]){
-              //this.active[name] = true
-              if(this.ioBuffer.length < this.bufferMax){
-                this.ioBuffer.push( {io: name, strength: this.ioType.read().inputs[name], action: this.active[name] } )
-              }
-            }
-            if(this.ioType.read().inputs[name] === 0  && this.active[name]){
-              //this.active[name] = false
-              this.ioBuffer.push( {io: name, strength: this.ioType.read().inputs[name], action: this.active[name] } )
-            }          
-          })
+          this.update()
         }
       })
+  }
 
+  update(){
+    let {names, ioType, ioBuffer, active, bufferMax} = this
+    names.forEach(name => {
+      if(ioType.read().inputs[name] > 0 ){
+        active[name] = true
+        if(ioBuffer.length < bufferMax){
+          ioBuffer.push( {io: name, strength: ioType.read().inputs[name], action: active[name] } )
+        }
+      }
+      if(ioType.read().inputs[name] === 0  && active[name]){
+        active[name] = false
+        ioBuffer.push( {io: name, strength: ioType.read().inputs[name], action: active[name] } )
+      }          
+    })
   }
 
   next(){
+    let {ioBuffer, isActive} = this
+    if(isActive && ioBuffer.length > 0){
+      let _return = ioBuffer[0]
+      ioBuffer.shift()
+      return {success: true, res: _return, remaining: ioBuffer.length}
+    }
+    else{
+      return {success: false, remaining: ioBuffer.length}  
+    }
+  }
+
+  nextSequence(){
     let {ioBuffer} = this
     if(ioBuffer.length > 0){
       let _return = ioBuffer[0]
       ioBuffer.shift()
-      return {success: true, res: _return}
+      return {success: true, res: _return, remaining: ioBuffer.length}
     }
     else{
-      return {success: false}  
+      return {success: false, remaining: ioBuffer.length}  
     }
+  }  
+
+
+  importCommands(commands){
+    this.setActive(false)
+    this.ioBuffer = []
+    commands.forEach(command => {
+      if(!!command.io){
+        this.ioBuffer.push( {io: command.io, strength: command.strength, action: command.strength > 0 ? true : false } )
+      }
+    })
+  }
+
+  setActive(state){
+    this.isActive = state
   }
 
   setBuffer(val){
     this.bufferMax = val
   }
 
-  active(){
-    this.isActive = true
-  }
-
-  deactivate(){
-    this.isActive = false
-  }
 }
 //--------------------------
 

@@ -167,6 +167,47 @@ export class TestUtility {
   }
   //--------------------------------------
 
+  //--------------------------------------  MOCK INPUT SEQUENCE TESTS
+  mockInputSequence(){
+    let {ControllerManager} = this.GameManager
+    
+    let mockCommands = [
+      {io: "U", strength: 1, action: true},
+      {io: "U", strength: 1, action: true},
+      {io: "D", strength: 1, action: true},
+      {io: "D", strength: 1, action: true},
+      {io: "L", strength: 1, action: true},
+      {io: "R", strength: 1, action: true},
+      {io: "L", strength: 1, action: true},
+      {io: "R", strength: 1, action: true},
+      {io: "BACK", strength: 1, action: true},
+      {io: "START", strength: 1, action: true}
+    ]
+    
+    ControllerManager.importCommands(mockCommands)
+    const done = () => {
+      // after done, restore controls to user
+      ControllerManager.setActive(true)
+    }      
+    const loop = () => {      
+        let _a = ControllerManager.nextSequence() 
+        if( _a.success ){                                  
+          if(_a.remaining === 0){
+            done()
+          }
+          else{
+            console.log(_a.res.io, _a.res.action)            
+            setTimeout(() => {
+              loop()
+            }, 500)
+          }
+        }
+     
+    }
+    loop()    
+  }
+  //--------------------------------------
+
 
 
 
