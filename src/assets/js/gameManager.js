@@ -49,16 +49,8 @@ export class GameManager {
       //-------------------------------------------------------------------
 
       //-------------------------------------------------------------------
-      this.ControllerManager = new ControllerManager(this.KeyboardManager)
+      this.ControllerManager = new ControllerManager(this.KeyboardManager, false)
       clearInterval(window.controllerManagerInterval)
-
-      // HOW TO LISTEN TO CONTROLLER MANAGER
-      window.controllerManagerInterval = setInterval(() => {
-        let _a = this.ControllerManager.next() 
-        if( _a.success ){
-          console.log(_a.res.io, _a.res.strength)
-         }
-      }, 1)      
       //-------------------------------------------------------------------
 
       //-------------------------------------------------------------------  ADD MASTER SEQUENCER

@@ -30,7 +30,8 @@
     // TEST BUTTONS
     .col-xs-12.center    
       button.btn-space(v-on:click='TestUtility.testLoadMasterSequencer()') Load Sequence
-      button.btn-space(v-on:click='TestUtility.testNextMasterSequence()') Next Sequence
+      button.btn-space(v-on:click='TestUtility.testNextMasterSequence()') Next Sequence      
+      button.btn-space(v-on:click='TestUtility.startInputListener()') Start Input Listener
       button.btn-space(v-on:click='TestUtility.mockInputSequence()') Mock Input Sequence
     .col-xs-12.center    
       button.btn-space(v-on:click='TestUtility.testLoadPixiFile()') Load Pixi File  

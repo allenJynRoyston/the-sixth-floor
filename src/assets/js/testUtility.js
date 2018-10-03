@@ -167,6 +167,20 @@ export class TestUtility {
   }
   //--------------------------------------
 
+  //--------------------------------------
+  startInputListener(){
+    let {ControllerManager} = this.GameManager
+    ControllerManager.setActive(true)    
+    clearInterval(window.controllerManagerInterval)    
+    window.controllerManagerInterval = setInterval(() => {
+      let _a = ControllerManager.next() 
+      if( _a.success ){
+        console.log(_a.res.io, _a.res.strength)
+       }
+    }, 1)       
+  }
+  //--------------------------------------
+
   //--------------------------------------  MOCK INPUT SEQUENCE TESTS
   mockInputSequence(){
     let {ControllerManager} = this.GameManager
@@ -180,6 +194,10 @@ export class TestUtility {
       {io: "R", strength: 1, action: true},
       {io: "L", strength: 1, action: true},
       {io: "R", strength: 1, action: true},
+      {io: "B", strength: 1, action: true},
+      {io: "A", strength: 1, action: true},
+      {io: "B", strength: 1, action: true},
+      {io: "A", strength: 1, action: true},      
       {io: "BACK", strength: 1, action: true},
       {io: "START", strength: 1, action: true}
     ]
@@ -191,12 +209,13 @@ export class TestUtility {
     }      
     const loop = () => {      
         let _a = ControllerManager.nextSequence() 
-        if( _a.success ){                                  
+        if( _a.success ){   
+          console.log(_a.res.io, _a.res.action)                                    
           if(_a.remaining === 0){
+            console.log('seqeunce done')
             done()
           }
-          else{
-            console.log(_a.res.io, _a.res.action)            
+          else{                   
             setTimeout(() => {
               loop()
             }, 500)

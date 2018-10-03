@@ -1,10 +1,10 @@
 //--------------------------
 export class ControllerManager {
-  constructor(ioType){      
+  constructor(ioType, isActive = true){      
       this.ioType = ioType
       this.names = ['U', 'D', 'L', 'R', 'A', 'B', 'X', 'Y', 'L1', 'L2', 'R1', 'R2', 'START', 'BACK']
       this.ioBuffer = []
-      this.isActive = true
+      this.isActive = isActive
       this.bufferMax = 10
 
       this.active = {
