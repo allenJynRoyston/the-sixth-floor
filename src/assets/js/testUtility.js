@@ -228,6 +228,15 @@ export class TestUtility {
   //--------------------------------------
 
 
+  //--------------------------------------
+  openMockModal(){
+    let {ModalManager} = this.GameManager
+    // ModalManager.setData()
+    ModalManager.start()    
+ 
+  }
+  //--------------------------------------
+
 
 
 }

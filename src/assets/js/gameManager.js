@@ -3,7 +3,8 @@ import {InventoryManager} from "./inventoryManager";
 import {DialogManager} from "./dialogManager";
 import {MasterSequencer} from "./masterSequencer";
 import {KeyboardManager} from "./keyboardManager";
-import {ControllerManager} from "./controllerManager"
+import {ControllerManager} from "./controllerManager";
+import {ModalManager} from "./modalManager";
 
 //--------------------------
 export class GameManager {
@@ -32,6 +33,13 @@ export class GameManager {
       // setup inventory
       this.InventoryManager = new InventoryManager({
         container: document.querySelector(".game-item-container")
+      })
+      //-------------------------------------------------------------------
+
+      //------------------------------------------------------------------- SETUP MODAL MANAGER
+      // setup inventory      
+      this.ModalManager = new ModalManager({
+        container: document.querySelector(".game-modal-container")
       })
       //-------------------------------------------------------------------
 
@@ -65,7 +73,8 @@ export class GameManager {
         InventoryManager: this.InventoryManager,
         DialogManager: this.DialogManager,
         KeyboardManager: this.KeyboardManager,
-        ControllerManager: this.ControllerManager
+        ControllerManager: this.ControllerManager,
+        ModalManager: this.ModalManager
       }
   }
 

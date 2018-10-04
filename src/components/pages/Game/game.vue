@@ -4,6 +4,7 @@
       select(v-model="selected" v-on:change='onchange()')
         option(v-for='file in files') {{file.filename}}      
     .game-container
+
       // inventory
       .game-inventory-btn(v-on:click='GameManager.UIManager.toggleInventory()')
       .game-inventory
@@ -12,17 +13,29 @@
         .game-item-container(v-if='!!GameManager.InventoryManager')
           .game-item.center(v-for='(item, index) in GameManager.InventoryManager.currentInventory' v-on:click='GameManager.InventoryManager.selectItem(item, index)')
             h1 {{item.name}}          
+
       // menus
       .game-menu-btn(v-on:click='GameManager.UIManager.toggleMenu()')
       .game-menu
+
+      // modal choices
+      .game-modal-container
+        .game-modal-bg
+        .game-modal
+        .game-modal
+        .game-modal
+        .game-modal
+
       // dialog modal
       .game-dialog-modal
         .speaker
           p 
         .content
           p 
+
       // underscreen
       .game-closeall(v-on:click='GameManager.UIManager.closeUI()')
+
       // game canvas
       .canvas-container
         pixi-component(v-bind:ele='PixiComponents')
@@ -50,6 +63,8 @@
       button.btn-space(v-on:click='TestUtility.nextDialog()') Next
       button.btn-space(v-on:click='TestUtility.autoplayDialog()') Autoplay
       button.btn-space(v-on:click='TestUtility.skipDialog()') Skip Dialog
+    .col-xs-12.center
+      button.btn-space(v-on:click='TestUtility.openMockModal()') Open Modal
 </template>
 
 <script src='./game.js'></script>
@@ -105,6 +120,28 @@
           p 
             font-size: 18px          
           
+      .game-modal-container
+        position: absolute
+        width: 100%
+        height: 100%
+        background-color: rgba(0, 0, 0, .75)           
+        display: flex
+        align-items: center
+        justify-content: center
+
+        .game-modal-bg
+          position: absolute
+          width: 98%
+          height: 97%
+          border-radius: 25px
+          border: 3px solid white
+          background-color: rgba(255, 255, 255, 0.2)
+
+        .game-modal
+          width: 200px
+          height: 100px 
+          border: 1px solid purple
+          position: absolute
 
       .game-inventory
         position: absolute
@@ -193,6 +230,6 @@
         cursor: pointer
         background-color: rgba(0, 0, 0, .2)
 
-
+      
 
 </style>
