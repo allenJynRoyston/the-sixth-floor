@@ -65,17 +65,38 @@ export class ModalManager{
     })
   }
 
-  show(){
-
+  animateModals(){
+    let {modals} = this
+    modals.forEach((modal, index) => {
+      anime({
+        targets: modal,
+        translateX: 0,
+        translateY: 0,
+        opacity: 0,
+        duration: 0
+      })        
+    })
   }
 
   start(){ 
     let {container} = this.props    
     let {modalBG} = this
     container.showMe()
+
+
+    let data = [
+      {text:  'option 1'},
+      {text:  'option 2'},
+      {text:  'option 3'},
+      {text:  'option 4'}
+    ]
+
     this.bgState(true)
       .then(() => {
-        console.log('next')
+        
+
+
+
       })
   }  
 
